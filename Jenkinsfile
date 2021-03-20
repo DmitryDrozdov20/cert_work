@@ -3,16 +3,7 @@ pipeline{
     tools {
         terraform 'terraform-11'
     }
-
-    stage('Copy GCP authentication json to workspace on Jenkins agent') {
-      steps {
-        //Inject GCP authentication json to agent
-        withCredentials([file(credentialsId: 'silken-realm-307723', variable: 'gcp_auth')]) {
-          sh 'cp \$gcp_auth silken-realm-307723-75330dcabcd8.json'
-        }
-      }  
-    }
-
+    
     stages{
         stage('Git Checkout'){
             steps{
