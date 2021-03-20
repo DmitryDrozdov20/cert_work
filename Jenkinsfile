@@ -17,7 +17,7 @@ pipeline{
         }
         stage('Terraform Apply'){
             steps{
-                sh 'terraform apply --auto-approve'
+                sh 'terraform apply --auto-approve -var='google_credentials="/var/lib/jenkins/workspace/CG_instance_create/cred-gcp.json"'
             }
         }
     }
