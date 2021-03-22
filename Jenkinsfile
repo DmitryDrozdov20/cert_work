@@ -23,13 +23,10 @@ pipeline{
         }
     }
 
-agent {
-
     docker {
       image 'fbird75/jenkins-ansible-agent'
       args  '-v /var/run/docker.sock:/var/run/docker.sock -u 0:0'
       registryCredentialsId '4f5b1636-2d4f-4dfc-83ef-d4a856c0788f'
     }
-  }
 }
 
