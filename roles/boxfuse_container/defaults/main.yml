@@ -1,0 +1,5 @@
+# defaults file for boxfuse_container
+#Docker Container Name on Host
+boxfuse_docker_container: boxfuse-app
+#Docker Image Name used to run container
+boxfuse_docker_image: fbird75/boxfuse-app:latest
