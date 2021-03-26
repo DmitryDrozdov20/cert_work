@@ -45,7 +45,7 @@ resource "google_compute_instance" "vm_stage" {
   }
 
   metadata = {
-    ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
+    ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
     }
   }  
 
@@ -78,7 +78,7 @@ resource "google_compute_instance" "vm_prod" {
   metadata_startup_script = "sudo apt-get update; sudo apt-get install python3 -y"
 
   metadata = {
-    ssh-keys = "root:${file("id_rsa.pub")}" // Copy ssh public key
+    ssh-keys = "root:${file("/root/.ssh/id_rsa.pub")}" // Copy ssh public key
     }
 
   network_interface {
