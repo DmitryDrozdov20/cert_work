@@ -16,14 +16,10 @@ provider "google" {
 
 resource "google_compute_address" "vm_stage_ip" {
   name = "stageip"
-  #count = var.node_count
-  #name = element(tolist(var.instance_tags), count.index)
   }
-
+# Create VM for staging
 resource "google_compute_instance" "vm_stage" {
   name = "stage"
-  # count = var.node_count
-  # name = element(tolist(var.instance_tags), count.index)
   machine_type = var.machine_type // 2vCPU, 2GB RAM
   
   allow_stopping_for_update = true
@@ -37,7 +33,7 @@ resource "google_compute_instance" "vm_stage" {
     }
   }
 
-  # Startup script - update, install python3-pip (for Ansible) 
+  # Startup script - update, install python3 (for Ansible) 
   metadata_startup_script = "sudo apt-get update; sudo apt-get install python3 -y"
 
   network_interface {
@@ -60,14 +56,11 @@ output "stage_ip" {
 
 resource "google_compute_address" "vm_prod_ip" {
   name = "prodip"
-  #count = var.node_count
-  #name = element(tolist(var.instance_tags), count.index)
   }
 
+# Create VM for Production
 resource "google_compute_instance" "vm_prod" {
   name = "prod"
-  # count = var.node_count
-  # name = element(tolist(var.instance_tags), count.index)
   machine_type = var.machine_type // 2vCPU, 2GB RAM
   
   allow_stopping_for_update = true
@@ -81,7 +74,7 @@ resource "google_compute_instance" "vm_prod" {
     }
   }
 
-  # Startup script - update, install python3-pip (for Ansible) 
+  # Startup script - update, install python3(for Ansible) 
   metadata_startup_script = "sudo apt-get update; sudo apt-get install python3 -y"
 
   metadata = {
@@ -105,10 +98,10 @@ output "prod_ip" {
 # Waiting_30s 
 resource  "time_sleep" "wait_30_seconds" {
   depends_on = [google_compute_instance.vm_prod]
-
   create_duration = "30s"
 }
 
+# Add IP address in inventory file 
 resource "null_resource" "ansible_hosts_provisioner" {
    depends_on = [time_sleep.wait_30_seconds]
   provisioner "local-exec" {
@@ -130,7 +123,7 @@ EOF
   #create_duration = "10s"
 #}
 
-# run playbook on created hosts
+# run playbook on created VM
 resource "null_resource" "ansible_playbook_provisioner" {
   depends_on = [time_sleep.wait_30_seconds]
   provisioner "local-exec" {
