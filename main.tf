@@ -128,7 +128,7 @@ EOF
 #resource "time_sleep" "wait_10_seconds" {
   #depends_on = [null_resource.ansible_hosts_provisioner]
   #create_duration = "10s"
-}
+#}
 
 # run playbook on created hosts
 resource "null_resource" "ansible_playbook_provisioner" {
