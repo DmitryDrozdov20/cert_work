@@ -132,8 +132,8 @@ EOF
 
 # run playbook on created hosts
 resource "null_resource" "ansible_playbook_provisioner" {
-  #depends_on = [time_sleep.wait_10_seconds]
+  depends_on = [time_sleep.wait_30_seconds]
   provisioner "local-exec" {
-    command = "sleep 30;ansible-playbook -u root --vault-password-file 'vault_pass' --private-key './id_rsa' -i ./inventory/hosts main.yml"
+    command = "sleep 10;ansible-playbook -u root --vault-password-file 'vault_pass' --private-key './id_rsa' -i ./inventory/hosts main.yml"
   }
 }
